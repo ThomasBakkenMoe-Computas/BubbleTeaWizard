@@ -70,11 +70,10 @@ func (m model) View() string {
 		m.height,
 		lipgloss.Center,
 		lipgloss.Center,
-	
 		lipgloss.JoinVertical(
 			lipgloss.Center,
 			m.questions[m.index],
-			m.styles.InputField.Render(m.answerField.View())
+			m.styles.InputField.Render(m.answerField.View()),
 		),
 	)
 }
