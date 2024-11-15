@@ -8,18 +8,37 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+type Styles struct {
+	BorderColor lipgloss.Color
+	InputField 	lipgloss.Style
+}
+
+func DefaultStyles () *Styles {
+	s := new(Styles)
+	s.BorderColor = lipgloss.Color("202")
+	s.InputField = lipgloss.NewStyle().BorderForeground(s.BorderColor).BorderStyle(lipgloss.NormalBorder()).Padding(1).Width(80)
+
+	return s
+}
+
 type model struct{
 	questions 	[]string
 	width 		int
 	height 		int
 	index 		int
 	answerField textinput.Model
+	styles 		*Styles
 }
 
 func New (questions []string) *model {
+	styles := DefaultStyles()
 	answerField := textinput.New()
-	return &model{questions: questions, answerField: answerField}
-
+	answerField.Placeholder = "Your answer here"
+	return &model{
+		questions:		questions,
+		answerField: 	answerField,
+		styles: 		styles,
+	}
 }
 
 func (m model) Init() tea.Cmd {
@@ -46,11 +65,18 @@ func (m model) View() string {
 	if m.width == 0 {
 		return "Loading..."
 	}
-	return lipgloss.JoinVertical(lipgloss.Center, m.questions[m.index], m.answerField.View())
+	return lipgloss.JoinVertical(
+		lipgloss.Center,
+		m.questions[m.index],
+		m.styles.InputField.Render(m.answerField.View()))
 }
 
 func main() {
-	questions := []string{"What is your name?", "What is your favoirite editor?", "What is you favorite quote?"}
+	questions := []string{
+		"What is your name?",
+		"What is your favoirite editor?",
+		"What is you favorite quote?",
+	}
 	m := New(questions)
 
 
