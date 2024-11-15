@@ -1,5 +1,8 @@
 package main
 
+// TODO: Follow the rest of the tutorial
+// https://youtu.be/Gl31diSVP8M?t=782
+
 import (
 	"log"
 
