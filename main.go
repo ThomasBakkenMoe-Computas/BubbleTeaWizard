@@ -65,10 +65,18 @@ func (m model) View() string {
 	if m.width == 0 {
 		return "Loading..."
 	}
-	return lipgloss.JoinVertical(
+	return lipgloss.Place(
+		m.width,
+		m.height,
 		lipgloss.Center,
-		m.questions[m.index],
-		m.styles.InputField.Render(m.answerField.View()))
+		lipgloss.Center,
+	
+		lipgloss.JoinVertical(
+			lipgloss.Center,
+			m.questions[m.index],
+			m.styles.InputField.Render(m.answerField.View())
+		),
+	)
 }
 
 func main() {
@@ -90,6 +98,4 @@ func main() {
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)
 	}
-
-
 }
