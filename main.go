@@ -5,18 +5,20 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type model struct{
-	questions []string
-	width int
-	height int
+	questions 	[]string
+	width 		int
+	height 		int
+	index 		int
 	answerField textinput.Model
-
 }
 
 func New (questions []string) *model {
-	return &model{questions: questions}
+	answerField := textinput.New()
+	return &model{questions: questions, answerField: answerField}
 
 }
 
@@ -44,7 +46,7 @@ func (m model) View() string {
 	if m.width == 0 {
 		return "Loading..."
 	}
-	return "Loaded!"
+	return lipgloss.JoinVertical(lipgloss.Center, m.questions[m.index], m.answerField.View())
 }
 
 func main() {
