@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -10,6 +11,7 @@ type model struct{
 	questions []string
 	width int
 	height int
+	answerField textinput.Model
 
 }
 
